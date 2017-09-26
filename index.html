@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+
+<body>
+
+
+  <script>
+    const cats = [{ name: 'cat1', count: 0 }, { name: 'cat2', count: 0 }];
+
+    cats.forEach(cat => {
+      const catPic = document.createElement('img');
+      catPic.setAttribute('src', `img/${cat.name}.jpg`);
+      const catName = document.createElement('h1');
+      catName.innerText = cat.name;
+      const catCounter = document.createElement('div');
+      catCounter.innerText = 0;
+
+      document.body.appendChild(catName);
+      document.body.appendChild(catPic);
+      document.body.appendChild(catCounter);
+
+      catPic.addEventListener('click', () => {
+        cat.count += 1;
+        catCounter.innerText = cat.count;
+      })
+    });
+  </script>
+</body>
+
+</html>
