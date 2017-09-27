@@ -40,7 +40,6 @@ const octopus = {
 };
 
 // View(s)
-
 const catView = {
   init() {
     // store pointers to DOM elements for later access
@@ -66,7 +65,7 @@ const catView = {
 
 const catListView = {
   init() {
-    // stor DOM elements for later access
+    // store DOM elements for later access
     this.catListEl = document.getElementById('cat-list');
 
     // render this view (update DOM elements)
@@ -89,6 +88,7 @@ const catListView = {
       this.catListEl.appendChild(option);
     }
 
+    // add listener on select to change current cat and render
     this.catListEl.addEventListener('change', e => {
       const cat = cats.find(cat => cat.name === e.target.value);
       octopus.currentCat = cat;
