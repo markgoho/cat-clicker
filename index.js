@@ -13,23 +13,26 @@ const octopus = {
   init() {
     // Set current cat to first one in the list
     model.currentCat = model.cats[0];
-
     catListView.init();
     catView.init();
   },
 
+  // getter for model.cats
   get cats() {
     return model.cats;
   },
 
+  // getter for model.currentCat
   get currentCat() {
     return model.currentCat;
   },
 
+  // setter for currentCat
   set currentCat(cat) {
     model.currentCat = cat;
   },
 
+  // increment counter then render
   incrementCounter() {
     model.currentCat.clickCount++;
     catView.render();
