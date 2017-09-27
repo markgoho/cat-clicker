@@ -15,6 +15,7 @@ const octopus = {
     model.currentCat = model.cats[0];
     catListView.init();
     catView.init();
+    adminView.init();
   },
 
   // getter for model.cats
@@ -68,6 +69,13 @@ const catListView = {
     // store DOM elements for later access
     this.catListEl = document.getElementById('cat-list');
 
+    // add listener on select to change current cat and render
+    this.catListEl.addEventListener('change', e => {
+      const cat = cats.find(cat => cat.name === e.target.value);
+      octopus.currentCat = cat;
+      catView.render();
+    });
+
     // render this view (update DOM elements)
     this.render();
   },
@@ -87,14 +95,16 @@ const catListView = {
       option.innerText = cat.name;
       this.catListEl.appendChild(option);
     }
-
-    // add listener on select to change current cat and render
-    this.catListEl.addEventListener('change', e => {
-      const cat = cats.find(cat => cat.name === e.target.value);
-      octopus.currentCat = cat;
-      catView.render();
-    });
   }
+};
+
+// premium pro version only!
+const adminView = {
+  init() {
+    // store DOM elements for later access
+    const adminBtn = document.querySelector('.admin-button');
+  },
+  render() {}
 };
 
 octopus.init();
