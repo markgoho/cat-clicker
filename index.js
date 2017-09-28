@@ -69,9 +69,12 @@ const catListView = {
     // store DOM elements for later access
     this.catListEl = document.getElementById('cat-list');
 
+    // get the cats from the octopus
+    this.cats = octopus.cats;
+
     // add listener on select to change current cat and render
     this.catListEl.addEventListener('change', e => {
-      const cat = cats.find(cat => cat.name === e.target.value);
+      const cat = this.cats.find(cat => cat.name === e.target.value);
       octopus.currentCat = cat;
       catView.render();
     });
@@ -82,13 +85,13 @@ const catListView = {
 
   render() {
     // get the cats from the octopus
-    const cats = octopus.cats;
+    this.cats = octopus.cats;
 
     // empty the cat list
     this.catListEl.innerHTML = octopus.currentCat.name;
 
     // loop over cats
-    for (const cat of cats) {
+    for (const cat of this.cats) {
       // make new option, set values
       const option = document.createElement('option');
       option.value = cat.name;
