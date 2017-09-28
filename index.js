@@ -76,7 +76,7 @@ const catListView = {
 
     // add listener on select to change current cat and render
     this.catListEl.addEventListener('change', e => {
-      const cat = cats.find(cat => cat.name === e.target.value);
+      const cat = this.cats.find(cat => cat.name === e.target.value);
       octopus.currentCat = cat;
       catView.render();
     });
