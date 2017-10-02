@@ -121,28 +121,35 @@ const adminView = {
     this.adminImg = document.querySelector('#imgUrl');
     this.adminCount = document.querySelector('#clicks');
 
+    // admin click listener to toggle visibility
     this.adminBtn.addEventListener('click', () => {
       this.adminArea.classList.toggle('hidden');
     });
 
+    // cancel button hides admin area
     this.cancelBtn.addEventListener('click', () =>
       this.adminArea.classList.add('hidden')
     );
 
+    // save button grabs values, sets current cat with new data
     this.saveBtn.addEventListener('click', () => {
+      // grab values of new data
       const newCat = {
         name: this.adminName.value,
         imgSrc: this.adminImg.value,
         clickCount: this.adminCount.value
       };
 
+      // get current index of cat
       const currentCatIndex = octopus.cats.findIndex(
         cat => octopus.currentCat === cat
       );
 
+      // set cat with new data, set new currentCat
       octopus.cats[currentCatIndex] = newCat;
       octopus.currentCat = octopus.cats[currentCatIndex];
-      //console.log(model.currentCat);
+
+      // update catView and catListView
       catView.render();
       catListView.render();
     });
