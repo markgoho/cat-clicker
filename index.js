@@ -33,10 +33,15 @@ const octopus = {
     model.currentCat = cat;
   },
 
+  updateCat(cat) {
+    model.currentCat = { ...cat };
+  },
+
   // increment counter then render
   incrementCounter() {
     model.currentCat.clickCount++;
     catView.render();
+    adminView.render();
   }
 };
 
@@ -77,6 +82,7 @@ const catListView = {
       const cat = this.cats.find(cat => cat.name === e.target.value);
       octopus.currentCat = cat;
       catView.render();
+      adminView.render();
     });
 
     // render this view (update DOM elements)
@@ -88,7 +94,7 @@ const catListView = {
     this.cats = octopus.cats;
 
     // empty the cat list
-    this.catListEl.innerHTML = octopus.currentCat.name;
+    this.catListEl.innerHTML = '';
 
     // loop over cats
     for (const cat of this.cats) {
@@ -96,8 +102,10 @@ const catListView = {
       const option = document.createElement('option');
       option.value = cat.name;
       option.innerText = cat.name;
-      this.catListEl.appendChild(option);
+      this.catListEl.add(option);
     }
+
+    this.catListEl.value = octopus.currentCat.name;
   }
 };
 
@@ -105,9 +113,48 @@ const catListView = {
 const adminView = {
   init() {
     // store DOM elements for later access
-    const adminBtn = document.querySelector('.admin-button');
+    this.adminBtn = document.querySelector('.admin-button');
+    this.adminArea = document.querySelector('.admin');
+    this.saveBtn = document.querySelector('.save');
+    this.cancelBtn = document.querySelector('.cancel');
+    this.adminName = document.querySelector('#name');
+    this.adminImg = document.querySelector('#imgUrl');
+    this.adminCount = document.querySelector('#clicks');
+
+    this.adminBtn.addEventListener('click', () => {
+      this.adminArea.classList.toggle('hidden');
+    });
+
+    this.cancelBtn.addEventListener('click', () =>
+      this.adminArea.classList.add('hidden')
+    );
+
+    this.saveBtn.addEventListener('click', () => {
+      const newCat = {
+        name: this.adminName.value,
+        imgSrc: this.adminImg.value,
+        clickCount: this.adminCount.value
+      };
+
+      const currentCatIndex = octopus.cats.findIndex(
+        cat => octopus.currentCat === cat
+      );
+
+      octopus.cats[currentCatIndex] = newCat;
+      octopus.currentCat = octopus.cats[currentCatIndex];
+      //console.log(model.currentCat);
+      catView.render();
+      catListView.render();
+    });
+
+    this.render();
   },
-  render() {}
+  render() {
+    const currentCat = octopus.currentCat;
+    this.adminName.value = currentCat.name;
+    this.adminImg.value = currentCat.imgSrc;
+    this.adminCount.value = currentCat.clickCount;
+  }
 };
 
 octopus.init();
