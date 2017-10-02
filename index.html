@@ -6,6 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Document</title>
+  <link rel="stylesheet" href="normalize.css">
   <link rel="stylesheet" href="style.css">
 </head>
 
@@ -24,13 +25,17 @@
 
   <!-- Admin view template -->
   <button class="admin-button">Admin</button>
-  <div class="admin">
+  <div class="admin hidden">
     <label for="name">Name:</label>
-    <input type="text" name="name">
+    <input type="text" id="name">
     <label for="imgUrl">ImgURL:</label>
-    <input type="text" name="imgUrl">
+    <input type="text" id="imgUrl">
     <label for="clicks">#Clicks:</label>
-    <input type="number">
+    <input type="number" id="clicks">
+    <div class="buttons">
+      <button class="save button">Save</button>
+      <button class="cancel button">Cancel</button>
+    </div>
   </div>
 
 
