@@ -33,10 +33,6 @@ const octopus = {
     model.currentCat = cat;
   },
 
-  updateCat(cat) {
-    model.currentCat = { ...cat };
-  },
-
   // increment counter then render
   incrementCounter() {
     model.currentCat.clickCount++;
@@ -82,6 +78,8 @@ const catListView = {
       const cat = this.cats.find(cat => cat.name === e.target.value);
       octopus.currentCat = cat;
       catView.render();
+
+      // render admin area
       adminView.render();
     });
 
@@ -93,7 +91,7 @@ const catListView = {
     // get the cats from the octopus
     this.cats = octopus.cats;
 
-    // empty the cat list
+    // start with empty cat list
     this.catListEl.innerHTML = '';
 
     // loop over cats
@@ -105,6 +103,7 @@ const catListView = {
       this.catListEl.add(option);
     }
 
+    // Set current value to current cat name
     this.catListEl.value = octopus.currentCat.name;
   }
 };
@@ -127,9 +126,9 @@ const adminView = {
     });
 
     // cancel button hides admin area
-    this.cancelBtn.addEventListener('click', () =>
-      this.adminArea.classList.add('hidden')
-    );
+    this.cancelBtn.addEventListener('click', () => {
+      this.adminArea.classList.add('hidden');
+    });
 
     // save button grabs values, sets current cat with new data
     this.saveBtn.addEventListener('click', () => {
@@ -140,14 +139,14 @@ const adminView = {
         clickCount: this.adminCount.value
       };
 
-      // get current index of cat
-      const currentCatIndex = octopus.cats.findIndex(
-        cat => octopus.currentCat === cat
-      );
+      // get current index of the current cat
+      const currentCatIndex = octopus.cats
+        .map(cat => cat.imgSrc)
+        .findIndex(imgSrc => octopus.currentCat.imgSrc === imgSrc);
 
       // set cat with new data, set new currentCat
-      octopus.cats[currentCatIndex] = newCat;
-      octopus.currentCat = octopus.cats[currentCatIndex];
+      octopus.cats[currentCatIndex] = newCat; // overwrite existing cat
+      octopus.currentCat = octopus.cats[currentCatIndex]; // change pointer to new cat data
 
       // update catView and catListView
       catView.render();
@@ -158,6 +157,7 @@ const adminView = {
   },
   render() {
     const currentCat = octopus.currentCat;
+
     this.adminName.value = currentCat.name;
     this.adminImg.value = currentCat.imgSrc;
     this.adminCount.value = currentCat.clickCount;
