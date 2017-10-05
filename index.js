@@ -40,41 +40,14 @@ const initialCats = [
     name: 'Spot',
     imgSrc: 'img/cat7.jpg',
     nicknames: ['Spotty']
+  },
+  {
+    clickCount: 0,
+    name: 'Garfield',
+    imgSrc: 'img/cat8.jpg',
+    nicknames: ['Garfy']
   }
 ];
-
-const Cat = function(data) {
-  this.clickCount = ko.observable(data.clickCount);
-  this.name = ko.observable(data.name);
-  this.imgSrc = ko.observable(data.imgSrc);
-  this.nicknames = ko.observableArray(data.nicknames);
-
-  this.level = ko.computed(function() {
-    let level = 'Newborn';
-
-    if (this.clickCount() > 10) {
-      level = 'Infant';
-    }
-
-    if (this.clickCount() > 50) {
-      level = 'Toddler';
-    }
-
-    if (this.clickCount() > 100) {
-      level = 'Pre-teen';
-    }
-
-    if (this.clickCount() > 200) {
-      level = 'Teen';
-    }
-
-    if (this.clickCount() > 500) {
-      level = 'Adult';
-    }
-
-    return level;
-  }, this);
-};
 
 const ViewModel = function() {
   const self = this;
@@ -85,9 +58,38 @@ const ViewModel = function() {
 
   this.currentCat = ko.observable(this.catList()[0]);
 
-  this.incrementCounter = function() {
-    self.currentCat().clickCount(self.currentCat().clickCount() + 1);
+  self.setCat = function(cat) {
+    self.currentCat(cat);
   };
+
+  this.incrementCounter = function() {
+    return self.currentCat().clickCount(self.currentCat().clickCount() + 1);
+  };
+};
+
+const Cat = function(data) {
+  this.clickCount = ko.observable(data.clickCount);
+  this.name = ko.observable(data.name);
+  this.imgSrc = ko.observable(data.imgSrc);
+  this.nicknames = ko.observableArray(data.nicknames);
+
+  this.level = ko.computed(function() {
+    let level = 'Newborn';
+    // Calculate level based on click count
+
+    if (this.clickCount() > 500) {
+      level = 'Adult';
+    } else if (this.clickCount() > 200) {
+      level = 'Teen';
+    } else if (this.clickCount() > 100) {
+      level = 'Pre-teen';
+    } else if (this.clickCount() > 50) {
+      level = 'Toddler';
+    } else if (this.clickCount() > 10) {
+      level = 'Infant';
+    }
+    return level;
+  }, this);
 };
 
 ko.applyBindings(new ViewModel());
