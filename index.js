@@ -128,6 +128,9 @@ const adminView = {
     // cancel button hides admin area
     this.cancelBtn.addEventListener('click', () => {
       this.adminArea.classList.add('hidden');
+
+      // reset values to whatever the currentCat is
+      this.render();
     });
 
     // save button grabs values, sets current cat with new data
